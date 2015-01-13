@@ -15,8 +15,12 @@ def splits(data, num = 10):
 def draw(val, length = 50):
   return int(val * length) * '*'
 
+def deno(Val):
+  return sum([sum(v) for v in Val])
+
+
 def histplot(Data, bins = []):
-  if not bins: splits = splits(Data, num = 10)
+  if not bins: bins = splits(Data, num = 10)
   Names = []; Values = []
   for dat in Data:
     Names.append(dat[0])
@@ -30,7 +34,7 @@ def histplot(Data, bins = []):
     for m in xrange(len(Data)):
       # print sum(Values[m])
       print ('%6s %6s|' % (Names[m],
-             '>=' + str(bins[n]))), draw(Values[m][n] / sum(Values[m])), Values[m][n]
+             '>=' + str(bins[n]))), draw((Values[m][n]) / deno(Values)), Values[m][n]
     print ""
 
 def _test():
