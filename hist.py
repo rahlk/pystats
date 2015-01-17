@@ -27,14 +27,14 @@ def histplot(Data, bins = []):
     counts = histogram(dat[1:], bins = bins)[0].tolist()
     Values.append(counts)
 
-  line = 100 * '-'
+  line = 20 * '-'
   # Print header
-  print ('%6s %6s' % ('Name', 'Range')); print line
+  print ('%12s %6s' % ('Name', 'Range')); print line
   for n in xrange(len(bins) - 1):
     for m in xrange(len(Data)):
       # print sum(Values[m])
-      print ('%6s %6s|' % (Names[m],
-             '>=' + str(bins[n]))), draw((Values[m][n]) / deno(Values)), Values[m][n]
+      print ('%12s %6s|' % (Names[m],
+             '' + str(bins[n]))), draw((Values[m][n]) / deno(Values)), Values[m][n]
     print ""
 
 def _test():
