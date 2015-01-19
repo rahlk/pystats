@@ -18,16 +18,16 @@ sys.dont_write_bytecode = True
 """
 class o():
   "Anonymous container"
-  def __init__(i, **fields) :
-    i.override(fields)
-  def override(i, d): i.__dict__.update(d); return i
-  def __repr__(i):
-    d = i.__dict__
-    name = i.__class__.__name__
+  def __init__(self, **fields) :
+    self.override(fields)
+  def override(self, d): self.__dict__.update(d); return self
+  def __repr__(self):
+    d = self.__dict__
+    name = self.__class__.__name__
     return name + '{' + ' '.join([':%s %s' % (k, pretty(d[k]))
-                     for k in i.show()]) + '}'
-  def show(i):
-    return [k for k in sorted(i.__dict__.keys())
+                     for k in self.show()]) + '}'
+  def show(self):
+    return [k for k in sorted(self.__dict__.keys())
             if not "_" in k]
 """
 
@@ -110,46 +110,46 @@ a bounded cache.
 """
 class Num:
   "An Accumulator for numbers"
-  def __init__(i, name, inits = []):
-    i.n = i.m2 = i.mu = 0.0
-    i.all = []
-    i._median = None
-    i.name = name
-    i.rank = 0
-    for x in inits: i.add(x)
-  def s(i)       : return (i.m2 / (i.n - 1)) ** 0.5
-  def add(i, x):
-    i._median = None
-    i.n += 1
-    i.all += [x]
-    delta = x - i.mu
-    i.mu += delta * 1.0 / i.n
-    i.m2 += delta * (x - i.mu)
-  def __add__(i, j):
-    return Num(i.name + j.name, i.all + j.all)
-  def quartiles(i):
+  def __init__(self, name, inits = []):
+    self.n = self.m2 = self.mu = 0.0
+    self.all = []
+    self._median = None
+    self.name = name
+    self.rank = 0
+    for x in inits: self.add(x)
+  def s(self)       : return (self.m2 / (self.n - 1)) ** 0.5
+  def add(self, x):
+    self._median = None
+    self.n += 1
+    self.all += [x]
+    delta = x - self.mu
+    self.mu += delta * 1.0 / self.n
+    self.m2 += delta * (x - self.mu)
+  def __add__(self, j):
+    return Num(self.name + j.name, self.all + j.all)
+  def quartiles(self):
     def p(x) : return int(100 * g(xs[x]))
-    i.median()
-    xs = i.all
+    self.median()
+    xs = self.all
     n = int(len(xs) * 0.25)
     return p(n) , p(2 * n) , p(3 * n)
-  def median(i):
-    if not i._median:
-      i.all = sorted(i.all)
-      i._median = median(i.all)
-    return i._median
-  def __lt__(i, j):
-    return i.median() < j.median()
-  def spread(i):
-    i.all = sorted(i.all)
-    n1 = i.n * 0.25
-    n2 = i.n * 0.75
-    if len(i.all) <= 1:
+  def median(self):
+    if not self._median:
+      self.all = sorted(self.all)
+      self._median = median(self.all)
+    return self._median
+  def __lt__(self, j):
+    return self.median() < j.median()
+  def spread(self):
+    self.all = sorted(self.all)
+    n1 = self.n * 0.25
+    n2 = self.n * 0.75
+    if len(self.all) <= 1:
       return 0
-    if len(i.all) == 2:
-      return i.all[1] - i.all[0]
+    if len(self.all) == 2:
+      return self.all[1] - self.all[0]
     else:
-      return i.all[int(n2)] - i.all[int(n1)]
+      return self.all[int(n2)] - self.all[int(n1)]
 
 
 """
@@ -283,20 +283,20 @@ def bootstrap(y0, z0, conf = 0.01, b = 1000):
     introduction to the boostrap."""
   class total():
     "quick and dirty data collector"
-    def __init__(i, some = []):
-      i.sum = i.n = i.mu = 0 ; i.all = []
-      for one in some: i.put(one)
-    def put(i, x):
-      i.all.append(x);
-      i.sum += x; i.n += 1; i.mu = float(i.sum) / i.n
-    def __add__(i1, i2): return total(i1.all + i2.all)
+    def __init__(self, some = []):
+      self.sum = self.n = self.mu = 0 ; self.all = []
+      for one in some: self.put(one)
+    def put(self, x):
+      self.all.append(x);
+      self.sum += x; self.n += 1; self.mu = float(self.sum) / self.n
+    def __add__(self, i1, i2): return total(i1.all + i2.all)
   y, z = total(y0), total(z0)
   x = y + z
   tobs = testStatistic(y, z)
   yhat = [y1 - y.mu + x.mu for y1 in y.all]
   zhat = [z1 - z.mu + x.mu for z1 in z.all]
   bigger = 0.0
-  for i in range(b):
+  for self in range(b):
     if testStatistic(total(sampleWithReplacement(yhat)),
                      total(sampleWithReplacement(zhat))) > tobs:
       bigger += 1
@@ -311,8 +311,8 @@ def _bootstraped():
              mu1 = 10, sigma1 = 1,
              mu2 = 10.2, sigma2 = 1):
     def g(mu, sigma) : return random.gauss(mu, sigma)
-    x = [g(mu1, sigma1) for i in range(n)]
-    y = [g(mu2, sigma2) for i in range(n)]
+    x = [g(mu1, sigma1) for self in range(n)]
+    y = [g(mu2, sigma2) for self in range(n)]
     return n, mu1, sigma1, mu2, sigma2, \
         'different' if bootstrap(x, y) else 'same'
   # very different means, same std
