@@ -1,5 +1,3 @@
-from __future__ import division
-
 from __future__ import division, print_function
 
 before = ['Before', 0, 0, 0, 0,
@@ -72,7 +70,7 @@ def showoff(name, before, after):
   win = bc.sum / ac.sum
   d, comment = cliffsDelta([i for i in before if i > 0],
                     [i for i in after if i > 0])
-  print(name, dict(win = f(win), delta = f(d), unsmall = comment))
+  return [name, dict(win = f(win), delta = f(d), unsmall = comment)]
 
 def _cliffsDelta():
   showoff('demo1', before, after)
