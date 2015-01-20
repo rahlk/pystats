@@ -1,4 +1,4 @@
-# pystatvis
+# pystats
 My ascii visualizations. At the moment, it includes  [Scott-Knott tests](https://github.com/timm/sbse14/wiki/skpy) and a simple histogram plot in ascii.
 
 ## Output of SK tests
