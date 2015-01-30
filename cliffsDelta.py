@@ -73,6 +73,7 @@ def showoff(name, before, after):
   return [name, dict(win = f(win), delta = f(d), unsmall = comment)]
 
 def _cliffsDelta():
-  showoff('demo1', before, after)
+  print(showoff('demo1', before, after))
 
-_cliffsDelta()
+if __name__ == 'main':
+  _cliffsDelta()
