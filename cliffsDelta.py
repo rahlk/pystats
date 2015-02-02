@@ -68,8 +68,8 @@ def showoff(name, before, after):
   for _ in range(bc.n - ac.n):  # make lists same length. error case: ac longer than bc. needs a fix here i think
      ac + 0
   win = bc.sum / ac.sum
-  d, comment = cliffsDelta([i for i in before if i > 0],
-                    [i for i in after if i > 0])
+  d, comment = cliffsDelta([i for i in before],
+                    [i for i in after])  # if i > 0
   return [name, dict(win = f(win), delta = f(d), unsmall = comment)]
 
 def _cliffsDelta():
